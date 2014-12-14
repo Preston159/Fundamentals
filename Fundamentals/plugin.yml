@@ -1,0 +1,100 @@
+name: Fundamentals
+author: Preston159
+version: 1.0.0
+description: A collection of essential commands
+main: com.Preston159.Fundamentals.Fundamentals
+depend: []
+commands:
+  top:
+    description: Teleport to the highest block at your current location
+  killall:
+    description: Clear all of a specified entity
+    aliases: [butcher]
+  gamemode:
+    description: Change gamemode to creative/survival/adventure/spectator
+    aliases: [gamemode,gmc,gms,gma]
+  speed:
+    description: Change your walking/flying speed
+  tp:
+    description: Teleport a player to another
+  tppos:
+    description: Teleport to coordinates
+  doas:
+    description: Run a command as another player
+    aliases: [sudo,runas]
+  hat:
+    description: Put the block you are holding on your head
+  workbench:
+    description: Open your portable workbench
+    aliases: [wb]
+  furnace:
+    description: Open your portable furnace (resets on reload/restart)
+  trash:
+    description: Open your portable trash can
+    aliases: [garbage]
+  enchant:
+    description: Enchant the item you're currently holding
+    aliases: [ec]
+  powertool:
+    description: Bind a command to an item
+    aliases: [pt]
+  pttoggle:
+    description: Toggle all of your powertools on/off
+    aliases: [ptt]
+  socialspy:
+    description: Toggle the ability to see others' private messages
+    aliases: [ss]
+  tptoggle:
+    description: Toggle teleport on/off
+    aliases: [tpt]
+  tpoverride:
+    description: Teleport even if teleportation is disabled
+    aliases: [tpo]
+  tell:
+    description: Send a private message to another player
+    aliases: [msg]
+  tp:
+    description: Teleport
+  god:
+    description: Toggle god mode on/off
+  heal:
+    description: Heal a player
+  feed:
+    description: Feed a player
+  tpa:
+    description: Ask a player for permission to teleport to them
+  tpahere:
+    description: Ask a player for permission to teleport them to you
+  tpaccept:
+    description: Accept a teleport request
+  tpdeny:
+    description: Deny a teleport request
+  warp:
+    description: Warp!
+  setwarp:
+    description: Set a warp at your position
+  delwarp:
+    description: Delete a warp
+  spawn:
+    description: Teleport yourself or another player to spawn
+  setspawn:
+    description: Set the world spawn at your current location
+  home:
+    description: Teleport to your home
+  sethome:
+    description: Set your home to your current location
+  back:
+    description: Go back to your deathpoint or most recent teleport location
+  prefix:
+    description: Get or set a player's prefix
+    aliases: [pre]
+  suffix:
+    description: Get or set a player's suffix
+    aliases: [suf]
+  nickname:
+    description: Get or set a player's nickname
+    aliases: [nick]
+  commchest:
+    description: Open the community chest
+  cmdalias:
+    description: Set a command alias
