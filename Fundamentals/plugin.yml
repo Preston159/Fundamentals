@@ -26,7 +26,7 @@ commands:
     description: Put the block you are holding on your head
   trash:
     description: Open your portable trash can
-    aliases: [garbage]
+    aliases: [garbage,rubbish]
   enchant:
     description: Enchant the item you're currently holding
     aliases: [ec]
@@ -48,8 +48,6 @@ commands:
   tell:
     description: Send a private message to another player
     aliases: [msg]
-  tp:
-    description: Teleport
   god:
     description: Toggle god mode on/off
   heal:
@@ -66,6 +64,7 @@ commands:
     description: Deny a teleport request
   warp:
     description: Warp!
+    aliases: [warps]
   setwarp:
     description: Set a warp at your position
   delwarp:
