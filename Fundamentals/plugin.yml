@@ -24,11 +24,6 @@ commands:
     aliases: [sudo,runas]
   hat:
     description: Put the block you are holding on your head
-  workbench:
-    description: Open your portable workbench
-    aliases: [wb]
-  furnace:
-    description: Open your portable furnace (resets on reload/restart)
   trash:
     description: Open your portable trash can
     aliases: [garbage]
