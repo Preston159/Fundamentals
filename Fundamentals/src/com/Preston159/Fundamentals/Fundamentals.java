@@ -49,6 +49,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.Inventory;
 
@@ -265,6 +266,12 @@ public class Fundamentals extends JavaPlugin implements Listener {
 		Location l = p.getLocation();
 		back.put((OfflinePlayer) p, l);
 		FundamentalsMessages.sendMessage("Use the /back command to return to your deathpoint", p);
+	}
+	
+	@EventHandler
+	public void onPlayerRespawn(PlayerRespawnEvent e) {
+		Player p = e.getPlayer();
+		CommandWarp.spawn(Bukkit.getServer().getConsoleSender(), p);
 	}
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
@@ -652,7 +659,7 @@ public class Fundamentals extends JavaPlugin implements Listener {
 				return;
 			}
 			Player p = (Player) sender;
-			CommandWarp.set(sender, args[0], p.getWorld(), p.getLocation().getX(), p.getLocation().getY(),
+			CommandWarp.set(p, args[0], p.getWorld(), p.getLocation().getX(), p.getLocation().getY(),
 					p.getLocation().getZ(), p.getLocation().getPitch(), p.getLocation().getYaw());
 		}
 		if(cmd.getName().equals("delwarp") && FundamentalsUtil.hasPermission(sender, cmd.getName(), false, true)) {
@@ -665,9 +672,9 @@ public class Fundamentals extends JavaPlugin implements Listener {
 		if(cmd.getName().equals("spawn") && FundamentalsUtil.hasPermission(sender, cmd.getName(), true, true)) {
 			if((sender instanceof Player) && (args.length == 0)) {
 				Player p = (Player) sender;
-				CommandWarp.run(sender, p, cmd.getName());
+				CommandWarp.spawn(sender, p);
 			} else if(args.length >= 1) {
-				CommandWarp.run(sender, FundamentalsUtil.getPlayer(args[0]), cmd.getName());
+				CommandWarp.spawn(sender, FundamentalsUtil.getPlayer(args[0]));
 			} else {
 				FundamentalsMessages.sendMessage(usage.get("spawn"), sender);
 			}
@@ -678,8 +685,7 @@ public class Fundamentals extends JavaPlugin implements Listener {
 				return;
 			}
 			Player p = (Player) sender;
-			CommandWarp.set(sender, "spawn", p.getWorld(), p.getLocation().getX(), p.getLocation().getY(),
-					p.getLocation().getZ(), p.getLocation().getPitch(), p.getLocation().getYaw());
+			CommandWarp.setSpawn(p);
 		}
 		if(cmd.getName().equals("home") && FundamentalsUtil.hasPermission(sender, cmd.getName(), true, true)) {
 			if(!(sender instanceof Player)) {

@@ -23,7 +23,6 @@ import java.util.Properties;
 
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
@@ -36,21 +35,8 @@ public class CommandWarp {
 			return;
 		}
 		Location l = FundamentalsFileManager.getLocation("warps", warp);
-		if(l == null && !warp.equals("SPAWN")) {
+		if(l == null) {
 			FundamentalsMessages.sendMessage("That warp does not exist", init);
-			return;
-		} else if(warp.equals("SPAWN")) {
-			Block b = p.getWorld().getHighestBlockAt(p.getWorld().getSpawnLocation());
-			Location ll = b.getLocation().add(0d, 1.5d, 0d);
-			Horse h = null;
-			if(p.isInsideVehicle()) {
-				if(p.getVehicle() instanceof Horse) {
-					h = (Horse) p.getVehicle();
-					h.eject();
-					h.teleport(ll);
-				}
-			}
-			p.teleport(ll);
 			return;
 		}
 		Boolean same = false;
@@ -79,13 +65,27 @@ public class CommandWarp {
 		out = out.replaceFirst(",", "");
 		FundamentalsMessages.sendMessage(out, sender);
 	}
-	public static void set(CommandSender sender, String warp, World w, Double x, Double y, Double z,
+	public static void set(Player p, String warp, World w, Double x, Double y, Double z,
 			Float pitch, Float yaw) {
 		warp = warp.toUpperCase();
 		String l = w.getName() + "," + String.valueOf(x) + "," + String.valueOf(y) + "," + String.valueOf(z) + "," +
 				String.valueOf(yaw) + "," + String.valueOf(pitch);
 		FundamentalsFileManager.setString("warps", warp, l);
-		FundamentalsMessages.sendMessage("Set warp " + warp, sender);
+		FundamentalsMessages.sendMessage("Set warp " + warp, p);
+	}
+	public static void setSpawn(Player p) {
+		World w = p.getWorld();
+		w.setSpawnLocation(p.getLocation().getBlockX(), p.getLocation().getBlockY(), p.getLocation().getBlockZ());
+		FundamentalsMessages.sendMessage("Set spawn", p);
+	}
+	public static void spawn(CommandSender sender, Player p) {
+		World w = p.getWorld();
+		p.teleport(w.getHighestBlockAt(w.getSpawnLocation()).getLocation().add(0d, 1.5d, 0d));
+		Boolean same = false;
+		if(sender instanceof Player)
+			if((Player) sender == p)
+				same = true;
+		FundamentalsMessages.sendMessage("Teleported " + (same ? "" : p.getName() + " ") + "to spawn", sender);
 	}
 	public static void del(CommandSender sender, String warp) {
 		warp = warp.toUpperCase();
