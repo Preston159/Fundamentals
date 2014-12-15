@@ -58,8 +58,9 @@ public class FundamentalsMessages {
 				ChatColor.BLUE + to.getName() + ChatColor.GOLD + "] " + ChatColor.RESET + msg);
 		for(UUID u : Fundamentals.socialspy) {
 			Player p = Bukkit.getPlayer(u);
-			p.sendMessage(ChatColor.GOLD + "[" + ChatColor.BLUE + from.getName() + ChatColor.GOLD + " -> " +
-					ChatColor.BLUE + to.getName() + ChatColor.GOLD + "] " + ChatColor.RESET + msg);
+			if(p != from && p != to)
+				p.sendMessage(ChatColor.GOLD + "[" + ChatColor.BLUE + from.getName() + ChatColor.GOLD + " -> " +
+						ChatColor.BLUE + to.getName() + ChatColor.GOLD + "] " + ChatColor.RESET + msg);
 		}
 	}
 	public static String format(String s) {
