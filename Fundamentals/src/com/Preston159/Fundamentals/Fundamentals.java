@@ -264,6 +264,7 @@ public class Fundamentals extends JavaPlugin implements Listener {
 		Player p = e.getEntity();
 		Location l = p.getLocation();
 		back.put((OfflinePlayer) p, l);
+		FundamentalsMessages.sendMessage("Use the /back command to return to your deathpoint", p);
 	}
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
@@ -697,7 +698,14 @@ public class Fundamentals extends JavaPlugin implements Listener {
 			CommandHome.set(p);
 		}
 		if(cmd.getName().equals("back") && FundamentalsUtil.hasPermission(sender, cmd.getName(), false, true)) {
-			
+			if(!(sender instanceof Player)) {
+				FundamentalsMessages.sendMessage("This command may only be run by an in-game player", sender);
+				return;
+			}
+			Player p = (Player) sender;
+			if(back.containsKey((OfflinePlayer) p)) {
+				p.teleport(back.get((OfflinePlayer) p));
+			}
 		}
 		if(cmd.getName().equals("commchest") && FundamentalsUtil.hasPermission(sender, cmd.getName(), true, true)) {
 			if(!(sender instanceof Player)) {
