@@ -1,6 +1,6 @@
 name: Fundamentals
 author: Preston159
-version: 1.0.0
+version: 1.0.1
 description: A collection of essential commands
 main: com.Preston159.Fundamentals.Fundamentals
 depend: []
@@ -12,7 +12,7 @@ commands:
     aliases: [butcher]
   gamemode:
     description: Change gamemode to creative/survival/adventure/spectator
-    aliases: [gamemode,gmc,gms,gma]
+    aliases: [gm,gamemode,gmc,gms,gma]
   speed:
     description: Change your walking/flying speed
   tp:
