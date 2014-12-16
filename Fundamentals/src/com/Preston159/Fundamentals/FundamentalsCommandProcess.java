@@ -18,12 +18,12 @@ import com.Preston159.Fundamentals.Fundamentals.chatAction;
 public class FundamentalsCommandProcess {
 	public static void run(FundamentalsCommand cmd) {
 		if(cmd.getName().equals("top") && FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName(), false, true))
-			if(cmd.getSender() instanceof Player)
+			if(cmd.isPlayer())
 				CommandTop.run((Player) cmd.getSender());
 			else
 				FundamentalsMessages.sendMessage("This command may only be run by an in-game player", cmd.getSender());
 		if(cmd.getName().equals("killall") && FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName(), false, true)) {
-			if(cmd.getSender() instanceof Player && cmd.getArgs().length >= 1)
+			if(cmd.isPlayer() && cmd.getArgs().length >= 1)
 				try {
 					CommandKillall.run(cmd.getSender(), EntityType.valueOf(cmd.getArgs()[0].toUpperCase()));
 				} catch(Exception exc) {
@@ -40,11 +40,11 @@ public class FundamentalsCommandProcess {
 				FundamentalsMessages.sendMessage(Fundamentals.usage.get("killall"), cmd.getSender());
 		}
 		if(cmd.getName().equals("gamemode") && FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName(), false, true)) {
-			if(cmd.getLabel().equalsIgnoreCase("gmc") && (cmd.getSender() instanceof Player) && cmd.getArgs().length == 0)
+			if(cmd.getLabel().equalsIgnoreCase("gmc") && (cmd.isPlayer()) && cmd.getArgs().length == 0)
 				CommandGamemode.run(cmd.getSender(), GameMode.CREATIVE, (Player) cmd.getSender());
-			else if(cmd.getLabel().equalsIgnoreCase("gms") && (cmd.getSender() instanceof Player) && cmd.getArgs().length == 0)
+			else if(cmd.getLabel().equalsIgnoreCase("gms") && (cmd.isPlayer()) && cmd.getArgs().length == 0)
 				CommandGamemode.run(cmd.getSender(), GameMode.SURVIVAL, (Player) cmd.getSender());
-			else if(cmd.getLabel().equalsIgnoreCase("gma") && (cmd.getSender() instanceof Player) && cmd.getArgs().length == 0)
+			else if(cmd.getLabel().equalsIgnoreCase("gma") && (cmd.isPlayer()) && cmd.getArgs().length == 0)
 				CommandGamemode.run(cmd.getSender(), GameMode.ADVENTURE, (Player) cmd.getSender());
 			else if(cmd.getArgs().length == 0)
 				FundamentalsMessages.sendMessage(Fundamentals.usage.get("gmc"), cmd.getSender());
@@ -56,7 +56,7 @@ public class FundamentalsCommandProcess {
 				else if((cmd.getArgs().length >= 1) && cmd.getLabel().equalsIgnoreCase("gma"))
 					CommandGamemode.run(cmd.getSender(), GameMode.ADVENTURE, FundamentalsUtil.getPlayer(cmd.getArgs()[0]));
 				}
-			else if((cmd.getArgs().length == 1) && (cmd.getSender() instanceof Player) &&
+			else if((cmd.getArgs().length == 1) && (cmd.isPlayer()) &&
 					(cmd.getLabel().equalsIgnoreCase("gamemode") || cmd.getLabel().equalsIgnoreCase("gm"))) {
 				if(FundamentalsUtil.isInt(cmd.getArgs()[0])) {
 					Integer i = Integer.valueOf(cmd.getArgs()[0]);
@@ -75,15 +75,15 @@ public class FundamentalsCommandProcess {
 			}
 		}
 		if(cmd.getName().equals("speed") && FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName(), false, true)) {
-			if((cmd.getArgs().length == 1) && (cmd.getSender() instanceof Player)) {
-				Player p = (Player) cmd.getSender();
+			if((cmd.getArgs().length == 1) && (cmd.isPlayer())) {
+				Player p = cmd.getPlayer();
 				try {
 					CommandSpeed.run(cmd.getSender(), Float.valueOf(cmd.getArgs()[0]), p);
 				} catch(Exception exc) {
 					FundamentalsMessages.sendMessage(Fundamentals.usage.get("speed"), cmd.getSender());
 				}
-			} else if((cmd.getArgs().length == 2) && (cmd.getSender() instanceof Player)) {
-				Player p = (Player) cmd.getSender();
+			} else if((cmd.getArgs().length == 2) && (cmd.isPlayer())) {
+				Player p = cmd.getPlayer();
 				try {
 					CommandSpeed.run(cmd.getSender(), Float.valueOf(cmd.getArgs()[0]), p,
 							CommandSpeed.type.valueOf(cmd.getArgs()[1].toUpperCase()));
@@ -103,7 +103,7 @@ public class FundamentalsCommandProcess {
 			}
 		}
 		if(cmd.getName().equals("tppos") && FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName(), false, true)) {
-			if(!(cmd.getSender() instanceof Player)) {
+			if(!(cmd.isPlayer())) {
 				FundamentalsMessages.sendMessage("This command may only be run by an in-game player", cmd.getSender());
 				return;
 			}
@@ -127,45 +127,45 @@ public class FundamentalsCommandProcess {
 			CommandDoas.run(FundamentalsUtil.getPlayer(cmd.getArgs()[0]), command);
 		}
 		if(cmd.getName().equals("hat") && FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName(), true, true)) {
-			if(!(cmd.getSender() instanceof Player)) {
+			if(!(cmd.isPlayer())) {
 				FundamentalsMessages.sendMessage("This command may only be run by an in-game player", cmd.getSender());
 				return;
 			}
 			if(cmd.getArgs().length == 0) {
-				Player p = (Player) cmd.getSender();
+				Player p = cmd.getPlayer();
 				CommandHat.run(p, p.getInventory().getItem(p.getInventory().getHeldItemSlot()), true);
 			}
 		}
 		if(cmd.getName().equals("workbench") && FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName(), false, true)) {
-			if(!(cmd.getSender() instanceof Player)) {
+			if(!(cmd.isPlayer())) {
 				FundamentalsMessages.sendMessage("This command may only be run by an in-game player", cmd.getSender());
 				return;
 			}
 			CommandWorkbench.run((Player) cmd.getSender());
 		}
 		if(cmd.getName().equals("furnace") && FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName(), false, true)) {
-			if(!(cmd.getSender() instanceof Player)) {
+			if(!(cmd.isPlayer())) {
 				FundamentalsMessages.sendMessage("This command may only be run by an in-game player", cmd.getSender());
 				return;
 			}
 			CommandFurnace.run((Player) cmd.getSender());
 		}
 		if(cmd.getName().equals("trash") && FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName(), true, true)) {
-			if(!(cmd.getSender() instanceof Player)) {
+			if(!(cmd.isPlayer())) {
 				FundamentalsMessages.sendMessage("This command may only be run by an in-game player", cmd.getSender());
 				return;
 			}
 			CommandTrash.run((Player) cmd.getSender());
 		}
 		if(cmd.getName().equals("enchant") && FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName(), false, true)) {
-			if(!(cmd.getSender() instanceof Player)) {
+			if(!(cmd.isPlayer())) {
 				FundamentalsMessages.sendMessage("This command may only be run by an in-game player", cmd.getSender());
 				return;
 			}
 			if(cmd.getArgs().length < 2) {
 				FundamentalsMessages.sendMessage(Fundamentals.usage.get("enchant"), cmd.getSender());
 			}
-			Player p = (Player) cmd.getSender();
+			Player p = cmd.getPlayer();
 			try {
 				CommandEnchant.run(p, p.getItemInHand(), Enchantment.getByName(cmd.getArgs()[0].toUpperCase()),
 						Integer.valueOf(cmd.getArgs()[1]));
@@ -175,11 +175,11 @@ public class FundamentalsCommandProcess {
 			}
 		}
 		if(cmd.getName().equals("powertool") && FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName(), false, true)) {
-			if(!(cmd.getSender() instanceof Player)) {
+			if(!(cmd.isPlayer())) {
 				FundamentalsMessages.sendMessage("This command may only be run by an in-game player", cmd.getSender());
 				return;
 			}
-			Player p = (Player) cmd.getSender();
+			Player p = cmd.getPlayer();
 			if(!Fundamentals.powertool.containsKey(p.getUniqueId())) {
 				Fundamentals.powertool.put(p.getUniqueId(), new HashMap<Material,String>());
 				Fundamentals.usept.put(p.getUniqueId(), true);
@@ -206,11 +206,11 @@ public class FundamentalsCommandProcess {
 				FundamentalsMessages.sendMessage("You must be holding an item in your hand!", p);
 		}
 		if(cmd.getName().equals("pttoggle") && FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName(), false, true)) {
-			if(!(cmd.getSender() instanceof Player)) {
+			if(!(cmd.isPlayer())) {
 				FundamentalsMessages.sendMessage("This command may only be run by an in-game player", cmd.getSender());
 				return;
 			}
-			Player p = (Player) cmd.getSender();
+			Player p = cmd.getPlayer();
 			if(!Fundamentals.powertool.containsKey(p.getUniqueId())) {
 				Fundamentals.powertool.put(p.getUniqueId(), new HashMap<Material,String>());
 				Fundamentals.usept.put(p.getUniqueId(), true);
@@ -219,11 +219,11 @@ public class FundamentalsCommandProcess {
 			FundamentalsMessages.sendMessage("Your powertool has been toggled " + (Fundamentals.usept.get(p.getUniqueId()) ? "on" : "off"), p);
 		}
 		if(cmd.getName().equals("socialspy") && FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName(), false, true)) {
-			if(!(cmd.getSender() instanceof Player)) {
+			if(!(cmd.isPlayer())) {
 				FundamentalsMessages.sendMessage("This command may only be run by an in-game player", cmd.getSender());
 				return;
 			}
-			Player p = (Player) cmd.getSender();
+			Player p = cmd.getPlayer();
 			if(!Fundamentals.socialspy.contains(p.getUniqueId()))
 				Fundamentals.socialspy.add(p.getUniqueId());
 			else
@@ -237,7 +237,7 @@ public class FundamentalsCommandProcess {
 		if(cmd.getName().equals("tpoverride") && FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName(), false, true)) {
 			try {
 				List<Player> pl = new ArrayList<Player>();
-				if((cmd.getArgs().length == 1) && (cmd.getSender() instanceof Player)) {
+				if((cmd.getArgs().length == 1) && (cmd.isPlayer())) {
 					pl.add((Player) cmd.getSender());
 					CommandTeleport.run(cmd.getSender(), FundamentalsUtil.getPlayer(cmd.getArgs()[0]), true, pl);
 				} else if(cmd.getArgs().length >= 2) {
@@ -256,7 +256,7 @@ public class FundamentalsCommandProcess {
 			}
 		}
 		if(cmd.getName().equals("tp") && FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName(), false, true)) {
-			if(cmd.getArgs().length == 1 && cmd.getSender() instanceof Player) {
+			if(cmd.getArgs().length == 1 && cmd.isPlayer()) {
 				List<Player> pl = new ArrayList<Player>();
 				pl.add((Player) cmd.getSender());
 				CommandTeleport.run(cmd.getSender(), FundamentalsUtil.getPlayer(cmd.getArgs()[0]), false, pl); 
@@ -285,8 +285,8 @@ public class FundamentalsCommandProcess {
 			CommandTell.run(cmd.getSender(), msg, FundamentalsUtil.getPlayer(cmd.getArgs()[0]));
 		}
 		if(cmd.getName().equals("god") && FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName(), false, true)) {
-			if((cmd.getArgs().length == 0) && (cmd.getSender() instanceof Player)) {
-				Player p = (Player) cmd.getSender();
+			if((cmd.getArgs().length == 0) && (cmd.isPlayer())) {
+				Player p = cmd.getPlayer();
 				CommandGod.run(cmd.getSender(), p);
 			} else if(cmd.getArgs().length >= 1) {
 				if(FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName() + ".others", false, true)) {
@@ -298,8 +298,8 @@ public class FundamentalsCommandProcess {
 			}
 		}
 		if(cmd.getName().equals("heal") && FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName(), false, true)) {
-			if((cmd.getArgs().length == 0) && (cmd.getSender() instanceof Player)) {
-				Player p = (Player) cmd.getSender();
+			if((cmd.getArgs().length == 0) && (cmd.isPlayer())) {
+				Player p = cmd.getPlayer();
 				CommandHeal.run(cmd.getSender(), p);
 			} else if(cmd.getArgs().length >= 1) {
 				if(FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName() + ".others", false, true)) {
@@ -311,8 +311,8 @@ public class FundamentalsCommandProcess {
 			}
 		}
 		if(cmd.getName().equals("feed") && FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName(), false, true)) {
-			if((cmd.getArgs().length == 0) && (cmd.getSender() instanceof Player)) {
-				Player p = (Player) cmd.getSender();
+			if((cmd.getArgs().length == 0) && (cmd.isPlayer())) {
+				Player p = cmd.getPlayer();
 				CommandFeed.run(cmd.getSender(), p);
 			} else if(cmd.getArgs().length >= 1) {
 				if(FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName() + ".others", false, true)) {
@@ -324,7 +324,7 @@ public class FundamentalsCommandProcess {
 			}
 		}
 		if((cmd.getName().equals("tpa") || cmd.getName().equals("tpahere"))  && FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName(), true, true)) {
-			if(!(cmd.getSender() instanceof Player)) {
+			if(!(cmd.isPlayer())) {
 				FundamentalsMessages.sendMessage("This command may only be run by an in-game player", cmd.getSender());
 				return;
 			}
@@ -332,20 +332,20 @@ public class FundamentalsCommandProcess {
 				FundamentalsMessages.sendMessage(Fundamentals.usage.get(cmd.getName()), cmd.getSender());
 				return;
 			}
-			Player init = (Player) cmd.getSender();
+			Player init = cmd.getPlayer();
 			Player p = FundamentalsUtil.getPlayer(cmd.getArgs()[0]);
 			CommandTeleport.acceptType at = CommandTeleport.acceptType.valueOf(cmd.getName().toUpperCase());
 			CommandTeleport.runWithPermission(init, p, at);
 		}
 		if(cmd.getName().equals("tpaccept") && FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName(), true, true)) {
-			if(!(cmd.getSender() instanceof Player)) {
+			if(!(cmd.isPlayer())) {
 				FundamentalsMessages.sendMessage("This command may only be run by an in-game player", cmd.getSender());
 				return;
 			}
 			CommandTeleport.accept((Player) cmd.getSender());
 		}
 		if(cmd.getName().equals("tpdeny") && FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName(), true, true)) {
-			if(!(cmd.getSender() instanceof Player)) {
+			if(!(cmd.isPlayer())) {
 				FundamentalsMessages.sendMessage("This command may only be run by an in-game player", cmd.getSender());
 				return;
 			}
@@ -354,7 +354,7 @@ public class FundamentalsCommandProcess {
 		if(cmd.getName().equals("warp") && FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName(), true, true)) {
 			if(cmd.getArgs().length == 0) {
 				CommandWarp.list(cmd.getSender());
-			} else if(cmd.getArgs().length == 1 && cmd.getSender() instanceof Player) {
+			} else if(cmd.getArgs().length == 1 && cmd.isPlayer()) {
 				CommandWarp.run(cmd.getSender(), (Player) cmd.getSender(), cmd.getArgs()[0]);
 			} else if(cmd.getArgs().length == 2) {
 				if(FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName() + ".others", false, true)) {
@@ -365,7 +365,7 @@ public class FundamentalsCommandProcess {
 			}
 		}
 		if(cmd.getName().equals("setwarp") && FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName(), false, true)) {
-			if(!(cmd.getSender() instanceof Player)) {
+			if(!(cmd.isPlayer())) {
 				FundamentalsMessages.sendMessage("This command may only be run by an in-game player", cmd.getSender());
 				return;
 			}
@@ -373,7 +373,7 @@ public class FundamentalsCommandProcess {
 				FundamentalsMessages.sendMessage(Fundamentals.usage.get("setwarp"), cmd.getSender());
 				return;
 			}
-			Player p = (Player) cmd.getSender();
+			Player p = cmd.getPlayer();
 			CommandWarp.set(p, cmd.getArgs()[0], p.getWorld(), p.getLocation().getX(), p.getLocation().getY(),
 					p.getLocation().getZ(), p.getLocation().getPitch(), p.getLocation().getYaw());
 		}
@@ -385,8 +385,8 @@ public class FundamentalsCommandProcess {
 			CommandWarp.del(cmd.getSender(), cmd.getArgs()[0]);
 		}
 		if(cmd.getName().equals("spawn") && FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName(), true, true)) {
-			if((cmd.getSender() instanceof Player) && (cmd.getArgs().length == 0)) {
-				Player p = (Player) cmd.getSender();
+			if((cmd.isPlayer()) && (cmd.getArgs().length == 0)) {
+				Player p = cmd.getPlayer();
 				CommandWarp.spawn(cmd.getSender(), p);
 			} else if(cmd.getArgs().length >= 1) {
 				if(FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName() + ".others", false, true)) {
@@ -397,50 +397,50 @@ public class FundamentalsCommandProcess {
 			}
 		}
 		if(cmd.getName().equals("setspawn") && FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName(), false, true)) {
-			if(!(cmd.getSender() instanceof Player)) {
+			if(!(cmd.isPlayer())) {
 				FundamentalsMessages.sendMessage("This command may only be run by an in-game player", cmd.getSender());
 				return;
 			}
-			Player p = (Player) cmd.getSender();
+			Player p = cmd.getPlayer();
 			CommandWarp.setSpawn(p);
 		}
 		if(cmd.getName().equals("home") && FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName(), true, true)) {
-			if(!(cmd.getSender() instanceof Player)) {
+			if(!(cmd.isPlayer())) {
 				FundamentalsMessages.sendMessage("This command may only be run by an in-game player", cmd.getSender());
 				return;
 			}
-			Player p = (Player) cmd.getSender();
+			Player p = cmd.getPlayer();
 			CommandHome.run(p);
 		}
 		if(cmd.getName().equals("sethome") && FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName(), true, true)) {
-			if(!(cmd.getSender() instanceof Player)) {
+			if(!(cmd.isPlayer())) {
 				FundamentalsMessages.sendMessage("This command may only be run by an in-game player", cmd.getSender());
 				return;
 			}
-			Player p = (Player) cmd.getSender();
+			Player p = cmd.getPlayer();
 			CommandHome.set(p);
 		}
 		if(cmd.getName().equals("back") && FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName(), false, true)) {
-			if(!(cmd.getSender() instanceof Player)) {
+			if(!(cmd.isPlayer())) {
 				FundamentalsMessages.sendMessage("This command may only be run by an in-game player", cmd.getSender());
 				return;
 			}
-			Player p = (Player) cmd.getSender();
+			Player p = cmd.getPlayer();
 			if(Fundamentals.back.containsKey((OfflinePlayer) p)) {
 				p.teleport(Fundamentals.back.get((OfflinePlayer) p));
 			}
 		}
 		if(cmd.getName().equals("commchest") && FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName(), true, true)) {
-			if(!(cmd.getSender() instanceof Player)) {
+			if(!(cmd.isPlayer())) {
 				FundamentalsMessages.sendMessage("This command may only be run by an in-game player", cmd.getSender());
 				return;
 			}
-			Player p = (Player) cmd.getSender();
+			Player p = cmd.getPlayer();
 			p.openInventory(Fundamentals.commChest);
 			FundamentalsMessages.sendMessage("Take what you need, put in what ya don't", p);
 		}
 		if(cmd.getName().equals("cmdalias") && FundamentalsUtil.hasPermission(cmd.getSender(), cmd.getName(), true, true)) {
-			if(!(cmd.getSender() instanceof Player)) {
+			if(!(cmd.isPlayer())) {
 				FundamentalsMessages.sendMessage("This command may only be run by an in-game player", cmd.getSender());
 				return;
 			}
@@ -453,7 +453,7 @@ public class FundamentalsCommandProcess {
 				s += " " + cmd.getArgs()[i].toLowerCase();
 			}
 			s = s.replaceFirst(" ", "");
-			Player p = (Player) cmd.getSender();
+			Player p = cmd.getPlayer();
 			UUID u = p.getUniqueId();
 			if(!Fundamentals.alias.containsKey(u))
 				Fundamentals.alias.put(u, new HashMap<String,String>());
