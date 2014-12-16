@@ -50,12 +50,14 @@ public class FundamentalsCommand {
 				CommandGamemode.run(sender, GameMode.ADVENTURE, (Player) sender);
 			else if(args.length == 0)
 				FundamentalsMessages.sendMessage(Fundamentals.usage.get("gmc"), sender);
-			else if((args.length >= 1) && label.equalsIgnoreCase("gmc"))
-				CommandGamemode.run(sender, GameMode.CREATIVE, FundamentalsUtil.getPlayer(args[0]));
-			else if((args.length >= 1) && label.equalsIgnoreCase("gms"))
-				CommandGamemode.run(sender, GameMode.SURVIVAL, FundamentalsUtil.getPlayer(args[0]));
-			else if((args.length >= 1) && label.equalsIgnoreCase("gma"))
-				CommandGamemode.run(sender, GameMode.ADVENTURE, FundamentalsUtil.getPlayer(args[0]));
+			else if(FundamentalsUtil.hasPermission(sender, cmd.getName() + ".others", false, true)) {
+				if((args.length >= 1) && label.equalsIgnoreCase("gmc"))
+					CommandGamemode.run(sender, GameMode.CREATIVE, FundamentalsUtil.getPlayer(args[0]));
+				else if((args.length >= 1) && label.equalsIgnoreCase("gms"))
+					CommandGamemode.run(sender, GameMode.SURVIVAL, FundamentalsUtil.getPlayer(args[0]));
+				else if((args.length >= 1) && label.equalsIgnoreCase("gma"))
+					CommandGamemode.run(sender, GameMode.ADVENTURE, FundamentalsUtil.getPlayer(args[0]));
+				}
 			else if((args.length == 1) && (sender instanceof Player) &&
 					(label.equalsIgnoreCase("gamemode") || label.equalsIgnoreCase("gm"))) {
 				if(FundamentalsUtil.isInt(args[0])) {
@@ -64,7 +66,8 @@ public class FundamentalsCommand {
 				} else {
 					CommandGamemode.run(sender, CommandGamemode.string(args[0]), (Player) sender);
 				}
-			} else if((args.length >= 2) && (label.equalsIgnoreCase("gamemode") || label.equalsIgnoreCase("gm"))) {
+			} else if((args.length >= 2) && (label.equalsIgnoreCase("gamemode") || label.equalsIgnoreCase("gm"))
+					&& FundamentalsUtil.hasPermission(sender, cmd.getName() + ".others", false, true)) {
 				if(FundamentalsUtil.isInt(args[0])) {
 					Integer i = Integer.valueOf(args[0]);
 					CommandGamemode.run(sender, CommandGamemode.integer(i), FundamentalsUtil.getPlayer(args[1]));
@@ -89,7 +92,7 @@ public class FundamentalsCommand {
 				} catch(Exception exc) {
 					FundamentalsMessages.sendMessage(Fundamentals.usage.get("speed"), sender);
 				}
-			} else if(args.length >= 3) {
+			} else if(args.length >= 3 && FundamentalsUtil.hasPermission(sender, cmd.getName() + ".others", false, true)) {
 				try {
 					CommandSpeed.run(sender, Float.valueOf(args[0]), FundamentalsUtil.getPlayer(args[2]),
 							CommandSpeed.type.valueOf(args[1].toUpperCase()));
@@ -240,11 +243,13 @@ public class FundamentalsCommand {
 					pl.add((Player) sender);
 					CommandTeleport.run(sender, FundamentalsUtil.getPlayer(args[0]), true, pl);
 				} else if(args.length >= 2) {
-					for(Integer i=0;i<args.length - 1;i++) {
-						pl.add(FundamentalsUtil.getPlayer(args[i]));
+					if(FundamentalsUtil.hasPermission(sender, cmd.getName() + ".others", false, true)) {
+						for(Integer i=0;i<args.length - 1;i++) {
+							pl.add(FundamentalsUtil.getPlayer(args[i]));
+						}
+						CommandTeleport.run(sender, FundamentalsUtil.getPlayer(args[args.length - 1]),
+								false, pl);
 					}
-					CommandTeleport.run(sender, FundamentalsUtil.getPlayer(args[args.length - 1]),
-							false, pl);
 				} else {
 					FundamentalsMessages.sendMessage(Fundamentals.usage.get("tpoverride"), sender);
 				}
@@ -258,11 +263,13 @@ public class FundamentalsCommand {
 				pl.add((Player) sender);
 				CommandTeleport.run(sender, FundamentalsUtil.getPlayer(args[0]), false, pl); 
 			} else if(args.length >= 2) {
-				List<Player> pl = new ArrayList<Player>();
-				for(Integer i=0;i<args.length - 1;i++) {
-					pl.add(FundamentalsUtil.getPlayer(args[i]));
+				if(FundamentalsUtil.hasPermission(sender, cmd.getName() + ".others", false, true)) {
+					List<Player> pl = new ArrayList<Player>();
+					for(Integer i=0;i<args.length - 1;i++) {
+						pl.add(FundamentalsUtil.getPlayer(args[i]));
+					}
+					CommandTeleport.run(sender, FundamentalsUtil.getPlayer(args[args.length - 1]), false, pl);
 				}
-				CommandTeleport.run(sender, FundamentalsUtil.getPlayer(args[args.length - 1]), false, pl);
 			} else {
 				FundamentalsMessages.sendMessage(Fundamentals.usage.get("tp"), sender);
 			}
@@ -284,8 +291,10 @@ public class FundamentalsCommand {
 				Player p = (Player) sender;
 				CommandGod.run(sender, p);
 			} else if(args.length >= 1) {
-				Player p = FundamentalsUtil.getPlayer(args[0]);
-				CommandGod.run(sender, p);
+				if(FundamentalsUtil.hasPermission(sender, cmd.getName() + ".others", false, true)) {
+					Player p = FundamentalsUtil.getPlayer(args[0]);
+					CommandGod.run(sender, p);
+				}
 			} else {
 				FundamentalsMessages.sendMessage(Fundamentals.usage.get("god"), sender);
 			}
@@ -295,8 +304,10 @@ public class FundamentalsCommand {
 				Player p = (Player) sender;
 				CommandHeal.run(sender, p);
 			} else if(args.length >= 1) {
-				Player p = FundamentalsUtil.getPlayer(args[0]);
-				CommandHeal.run(sender, p);
+				if(FundamentalsUtil.hasPermission(sender, cmd.getName() + ".others", false, true)) {
+					Player p = FundamentalsUtil.getPlayer(args[0]);
+					CommandHeal.run(sender, p);
+				}
 			} else {
 				FundamentalsMessages.sendMessage(Fundamentals.usage.get("heal"), sender);
 			}
@@ -306,8 +317,10 @@ public class FundamentalsCommand {
 				Player p = (Player) sender;
 				CommandFeed.run(sender, p);
 			} else if(args.length >= 1) {
-				Player p = FundamentalsUtil.getPlayer(args[0]);
-				CommandFeed.run(sender, p);
+				if(FundamentalsUtil.hasPermission(sender, cmd.getName() + ".others", false, true)) {
+					Player p = FundamentalsUtil.getPlayer(args[0]);
+					CommandFeed.run(sender, p);
+				}
 			} else {
 				FundamentalsMessages.sendMessage(Fundamentals.usage.get("feed"), sender);
 			}
@@ -346,7 +359,9 @@ public class FundamentalsCommand {
 			} else if(args.length == 1 && sender instanceof Player) {
 				CommandWarp.run(sender, (Player) sender, args[0]);
 			} else if(args.length == 2) {
-				CommandWarp.run(sender, FundamentalsUtil.getPlayer(args[0]), args[1]);
+				if(FundamentalsUtil.hasPermission(sender, cmd.getName() + ".others", false, true)) {
+					CommandWarp.run(sender, FundamentalsUtil.getPlayer(args[0]), args[1]);
+				}
 			} else {
 				FundamentalsMessages.sendMessage(Fundamentals.usage.get("warp"), sender);
 			}
@@ -376,7 +391,9 @@ public class FundamentalsCommand {
 				Player p = (Player) sender;
 				CommandWarp.spawn(sender, p);
 			} else if(args.length >= 1) {
-				CommandWarp.spawn(sender, FundamentalsUtil.getPlayer(args[0]));
+				if(FundamentalsUtil.hasPermission(sender, cmd.getName() + ".others", false, true)) {
+					CommandWarp.spawn(sender, FundamentalsUtil.getPlayer(args[0]));
+				}
 			} else {
 				FundamentalsMessages.sendMessage(Fundamentals.usage.get("spawn"), sender);
 			}
