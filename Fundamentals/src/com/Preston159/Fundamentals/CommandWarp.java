@@ -77,10 +77,14 @@ public class CommandWarp {
 		World w = p.getWorld();
 		w.setSpawnLocation(p.getLocation().getBlockX(), p.getLocation().getBlockY(), p.getLocation().getBlockZ());
 		FundamentalsMessages.sendMessage("Set spawn", p);
+		FundamentalsFileManager.setString("spawn", "yaw", String.valueOf(p.getLocation().getYaw()));
+		FundamentalsFileManager.setString("spawn", "pitch", String.valueOf(p.getLocation().getPitch()));
 	}
 	public static void spawn(CommandSender sender, Player p) {
 		World w = p.getWorld();
 		p.teleport(w.getHighestBlockAt(w.getSpawnLocation()).getLocation().add(0d, 1.5d, 0d));
+		p.getLocation().setYaw(FundamentalsFileManager.get("spwn", "yaw", 0f));
+		p.getLocation().setPitch(FundamentalsFileManager.get("spawn", "yaw", 0f));
 		Boolean same = false;
 		if(sender instanceof Player)
 			if((Player) sender == p)
