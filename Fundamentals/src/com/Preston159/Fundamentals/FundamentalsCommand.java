@@ -40,6 +40,7 @@ public class FundamentalsCommand {
 	String[] getArgs() {return args;}
 	String getArgsAsString() {return argsToString(args);}
 	Boolean isPlayer() {return (sender instanceof Player);}
+	Player getPlayer() {if(isPlayer()) return (Player) sender; return null;}
 	
 	private String argsToString(String[] args) {
 		String ret = "";
