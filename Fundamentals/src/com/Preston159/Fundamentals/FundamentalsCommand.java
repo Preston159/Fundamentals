@@ -2,6 +2,7 @@ package com.Preston159.Fundamentals;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class FundamentalsCommand {
 	private String name;
@@ -38,6 +39,7 @@ public class FundamentalsCommand {
 	CommandSender getSender() {return sender;}
 	String[] getArgs() {return args;}
 	String getArgsAsString() {return argsToString(args);}
+	Boolean isPlayer() {return (sender instanceof Player);}
 	
 	private String argsToString(String[] args) {
 		String ret = "";
