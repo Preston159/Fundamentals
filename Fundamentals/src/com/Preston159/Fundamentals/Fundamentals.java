@@ -110,15 +110,15 @@ public class Fundamentals extends JavaPlugin implements Listener {
 		usage.put("enchant", "Usage: /enchant <enchantment> <level>");
 		usage.put("powertool", "Usage: /powertool <command> [args]...");
 		usage.put("tell", "Usage: /tell <player> <message>");
-		usage.put("tpoverride", "Usage: /tpoverride <player to> or Usage: /tpoverride <player(s) from>... <player to>");
+		usage.put("tpoverride", "Usage: /tpoverride <player to> or /tpoverride <player(s) from>... <player to>");
 		usage.put("god", "Usage: /god [player]");
 		usage.put("heal", "Usage: /heal [player]");
 		usage.put("tpa", "Usage: /tpa <player>");
 		usage.put("tpahere", "Usage: /tpahere <player");
-		usage.put("warp", "Usage: /warp or Usage: /warp <warp> or Usage: /warp <player> <warp>");
+		usage.put("warp", "Usage: /warp or /warp <warp> or Usage: /warp <player> <warp>");
 		usage.put("setwarp", "Usage: /setwarp <warp>");
 		usage.put("delwarp", "Usage: /delwarp <warp>");
-		usage.put("spawn", "Usage: /spawn or Usage: /spawn <player>");
+		usage.put("spawn", "Usage: /spawn or /spawn <player>");
 		usage.put("home", "Usage: /home");
 		usage.put("sethome", "Usage: /sethome");
 		usage.put("commchest", "Usage: /commchest");
