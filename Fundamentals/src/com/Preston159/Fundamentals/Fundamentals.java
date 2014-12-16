@@ -80,6 +80,7 @@ public class Fundamentals extends JavaPlugin implements Listener {
 		
 		FundamentalsFileManager.getFile("homes");
 		FundamentalsFileManager.getFile("warps");
+		FundamentalsFileManager.getFile("spawn");
 		FundamentalsFileManager.getFile("commchest");
 		
 		FundamentalsFileManager.getFile("config");
