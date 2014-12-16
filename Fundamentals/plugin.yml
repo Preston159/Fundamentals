@@ -1,6 +1,6 @@
 name: Fundamentals
 author: Preston159
-version: 1.0.1
+version: 1.0.3
 description: A collection of essential commands
 main: com.Preston159.Fundamentals.Fundamentals
 depend: []
