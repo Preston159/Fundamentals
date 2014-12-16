@@ -305,7 +305,7 @@ public class Fundamentals extends JavaPlugin implements Listener {
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		FundamentalsCommand.run(sender, cmd, label, args);
+		FundamentalsCommandProcess.run(sender, cmd, label, args);
 		return true;
 	/*	if(sender.hasPermission("fundamentals." + cmd.getName()))
 			command(sender, cmd, label, args);

@@ -17,7 +17,7 @@ import org.bukkit.entity.Player;
 
 import com.Preston159.Fundamentals.Fundamentals.chatAction;
 
-public class FundamentalsCommand {
+public class FundamentalsCommandProcess {
 	public static void run(CommandSender sender, Command cmd, String label, String[] args) {
 		if(cmd.getName().equals("top") && FundamentalsUtil.hasPermission(sender, cmd.getName(), false, true))
 			if(sender instanceof Player)
