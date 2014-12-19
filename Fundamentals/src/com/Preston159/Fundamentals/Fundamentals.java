@@ -19,6 +19,7 @@
 
 package com.Preston159.Fundamentals;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -68,6 +69,9 @@ public class Fundamentals extends JavaPlugin implements Listener {
 	public static List<UUID> godmode = new ArrayList<UUID>();
 	HashMap<UUID,ArrayList<Location>> homes = new HashMap<UUID,ArrayList<Location>>();
 	public static HashMap<OfflinePlayer,Location> back = new HashMap<OfflinePlayer,Location>();
+	public static String motd = "";
+	
+	public static String encoding;
 	
 	public static Plugin plugin = null;
 	
@@ -75,19 +79,27 @@ public class Fundamentals extends JavaPlugin implements Listener {
 		
 		this.saveResource("LICENSE.TXT", true);
 		
+		Metrics m;
+		try {
+			m = new Metrics(this);
+			m.start();
+		} catch (IOException e) {
+			Bukkit.getServer().getLogger().info("Could not report to mcstats.org");
+		}
+		
 		Bukkit.getServer().getPluginManager().registerEvents(this, this);
 		plugin = this;
 		
-		FundamentalsFileManager.getFile("homes");
-		FundamentalsFileManager.getFile("warps");
-		FundamentalsFileManager.getFile("spawn");
-		FundamentalsFileManager.getFile("commchest");
+		FundamentalsFileManager.getPropertyFile("homes");
+		FundamentalsFileManager.getPropertyFile("warps");
+		FundamentalsFileManager.getPropertyFile("spawn");
+		FundamentalsFileManager.getPropertyFile("commchest");
 		
-		FundamentalsFileManager.getFile("config");
-		FundamentalsFileManager.getFile("prefix");
-		FundamentalsFileManager.getFile("suffix");
-		FundamentalsFileManager.getFile("nickname");
-		FundamentalsFileManager.getFile("chatgroups");
+		FundamentalsFileManager.getPropertyFile("config");
+		FundamentalsFileManager.getPropertyFile("prefix");
+		FundamentalsFileManager.getPropertyFile("suffix");
+		FundamentalsFileManager.getPropertyFile("nickname");
+		FundamentalsFileManager.getPropertyFile("chatgroups");
 		
 		commChest = Bukkit.createInventory(null, 36);
 		FundamentalsFileManager.loadCommChest();
@@ -95,6 +107,9 @@ public class Fundamentals extends JavaPlugin implements Listener {
 		for(chatAction c : chatAction.values()) {
 			chatCommands.add(c.toString().toLowerCase());
 		}
+		
+		encoding = FundamentalsFileManager.getNoEmpty("config", "encoding", "UTF8");
+		motd = FundamentalsMessages.format(FundamentalsFileManager.getPlainFile("motd.txt", false));
 		
 		/**
 		 * Usage stuffs
@@ -127,6 +142,7 @@ public class Fundamentals extends JavaPlugin implements Listener {
 		usage.put("suffix", "Usage: /suffix <player> [suffix|_]");
 		usage.put("nickname", "Usage: /nickname <player> [nick|_]");
 		usage.put("cmdalias", "Usage: /cmdalias <alias> <command|_> [args]...");
+		usage.put("motd", "Usage: /motd or /motd <player>");
 	}
 	public void onDisable() {
 		FundamentalsFileManager.saveCommChest();
@@ -238,6 +254,9 @@ public class Fundamentals extends JavaPlugin implements Listener {
 		if(!p.hasPlayedBefore()) {
 			if(CommandWarp.exists("spawn"))
 				CommandWarp.run(Bukkit.getServer().getConsoleSender(), p, "spawn");
+		}
+		if(!motd.equals("")) {
+			FundamentalsMessages.sendMessages(motd, p);
 		}
 		/**chat*/
 		if(FundamentalsFileManager.properties.get("chatgroups").containsKey(e.getPlayer().getName().toLowerCase())) {

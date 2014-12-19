@@ -464,6 +464,20 @@ public class FundamentalsCommandProcess {
 				Fundamentals.alias.get(u).put(cmd.getArgs()[0], s);
 			}
 		}
+		if(cmd.getName().equals("motd")) {
+			if(cmd.getArgs().length >= 1) {
+				Player to = FundamentalsUtil.getPlayer(cmd.getArgs()[0]);
+				if(to == null) {
+					FundamentalsMessages.sendMessage("Player not found", cmd.getSender());
+					return;
+				}
+				FundamentalsMessages.sendMessages(Fundamentals.motd, to);
+			} else if(cmd.isPlayer()) {
+				FundamentalsMessages.sendMessages(Fundamentals.motd, cmd.getPlayer());
+			} else {
+				FundamentalsMessages.sendMessage(Fundamentals.usage.get("motd"), cmd.getSender());
+			}
+		}
 		
 		/**chat*/
 		if(!Fundamentals.chatCommands.contains(cmd.getName())) return;

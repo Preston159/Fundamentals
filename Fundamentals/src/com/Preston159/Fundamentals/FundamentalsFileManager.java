@@ -23,11 +23,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
+
+import net.minecraft.util.org.apache.commons.io.IOUtils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -36,8 +39,9 @@ import org.bukkit.inventory.ItemStack;
 
 public class FundamentalsFileManager {
 	public static HashMap<String, Properties> properties = new HashMap<String, Properties>();
+	public static HashMap<String, String> files = new HashMap<String, String>();
 	private static String dataFolder = Fundamentals.plugin.getDataFolder() + File.separator;
-	public static void getFile(String fileName) {
+	public static void getPropertyFile(String fileName) {
 		new File(dataFolder).mkdir();
 		FileInputStream fis = null;
 		try {
@@ -57,6 +61,27 @@ public class FundamentalsFileManager {
 			
 		}
 	}
+	public static String getPlainFile(String fileName, Boolean saveNull) {
+		new File(dataFolder).mkdir();
+		FileInputStream fis = null;
+		String s = "";
+		try {
+			File file = new File(dataFolder + fileName);
+			if(!file.exists()) {
+				file.createNewFile();
+			}
+			fis = new FileInputStream(file);
+			StringWriter writer = new StringWriter();
+			IOUtils.copy(fis, writer, Fundamentals.encoding);
+			s = writer.toString();
+			if(saveNull || s != "");
+				files.put(fileName, s);
+			fis.close();
+		} catch(Exception exc) {
+			
+		}
+		return s;
+	}
 	public static String get(String file, String key, String def) {
 		if(properties.containsKey(file)) {
 			try {
@@ -69,7 +94,7 @@ public class FundamentalsFileManager {
 			Fundamentals.plugin.getLogger().severe("Valid string missing for " + key);
 			return def;
 		} else {
-			getFile(file);
+			getPropertyFile(file);
 			Fundamentals.plugin.getLogger().severe("File " + file + " is either nonexistent or was not pre-loaded.  Default value returned for " + key);
 			return def;
 		}	
@@ -92,7 +117,7 @@ public class FundamentalsFileManager {
 			Fundamentals.plugin.getLogger().severe("Valid boolean missing for " + key);
 			return def;
 		} else {
-			getFile(file);
+			getPropertyFile(file);
 			Fundamentals.plugin.getLogger().severe("File " + file + " is either nonexistent or was not pre-loaded.  Default value returned for " + key);
 			return def;
 		}	
@@ -109,7 +134,7 @@ public class FundamentalsFileManager {
 			Fundamentals.plugin.getLogger().severe("Valid integer missing for " + key);
 			return def;
 		} else {
-			getFile(file);
+			getPropertyFile(file);
 			Fundamentals.plugin.getLogger().severe("File " + file + " is either nonexistent or was not pre-loaded.  Default value returned for " + key);
 			return def;
 		}	
@@ -126,7 +151,7 @@ public class FundamentalsFileManager {
 			Fundamentals.plugin.getLogger().severe("Valid float missing for " + key);
 			return def;
 		} else {
-			getFile(file);
+			getPropertyFile(file);
 			Fundamentals.plugin.getLogger().severe("File " + file + " is either nonexistent or was not pre-loaded.  Default value returned for " + key);
 			return def;
 		}
@@ -152,7 +177,7 @@ public class FundamentalsFileManager {
 			}
 			Fundamentals.plugin.getLogger().severe("Valid string array missing for " + key);
 		} else {
-			getFile(file);
+			getPropertyFile(file);
 			Fundamentals.plugin.getLogger().severe("File" + file + " is either nonexistent or was not pre-loaded.  Default value returned for " + key);
 			return Arrays.asList(def);
 		}
@@ -192,7 +217,7 @@ public class FundamentalsFileManager {
 				
 			}
 		} else {
-			getFile(file);
+			getPropertyFile(file);
 			Fundamentals.plugin.getLogger().severe("File" + file + " is either nonexistent or was not pre-loaded.  Default value returned for " + key);
 			return Arrays.asList(def);
 		}
@@ -210,7 +235,7 @@ public class FundamentalsFileManager {
 			}
 		}
 		if(!properties.containsKey(file)) {
-			getFile(file);
+			getPropertyFile(file);
 		}
 		if(properties.containsKey(file)) {
 			Properties p = properties.get(file);
@@ -241,7 +266,7 @@ public class FundamentalsFileManager {
 	public static void setStringInMemory(String file, String key, String value) {
 		File f = new File(dataFolder + file + ".properties");
 		if(f.exists() && !properties.containsKey(file)) {
-			getFile(file);
+			getPropertyFile(file);
 		}
 		if(!properties.containsKey(file)) {
 			properties.put(file, new Properties());

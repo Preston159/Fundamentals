@@ -42,6 +42,9 @@ public class FundamentalsMessages {
 			p.sendMessage(ChatColor.AQUA + s);
 		p.sendMessage(ChatColor.GOLD + "------------------------------------");
 	}
+	public static void sendMessages(String msgs, Player p) {
+		sendMessages(msgs.split("\n"), p);
+	}
 	public static void sendMessagesWithTitle(String title, String[] msgs, Player p) {
 		String line = "------------------";
 		Integer length = 18 - (title.length() / 2);
@@ -64,7 +67,8 @@ public class FundamentalsMessages {
 		}
 	}
 	public static String format(String s) {
-		return s.replaceAll("&&", ";amp;").replaceAll("&", ChatColor.COLOR_CHAR + "").replaceAll(";amp;", "&");
+		return s.replaceAll("&&", ";amp;").replaceAll("&", ChatColor.COLOR_CHAR + "").replaceAll(";amp;", "&")
+				.replaceAll("\r\n", "\n");
 	}
 	@SuppressWarnings("deprecation")
 	public static void sendAll(String msg) {
