@@ -111,7 +111,7 @@ public class Fundamentals extends JavaPlugin implements Listener {
 		}
 		
 		encoding = FundamentalsFileManager.getNoEmpty("config", "encoding", "UTF-8");
-		motd = FundamentalsMessages.format(FundamentalsFileManager.getPlainFile("motd.txt", false));
+		motd = FundamentalsMessages.format(FundamentalsFileManager.getPlainFile("motd.txt", false), ChatColor.WHITE);
 		
 		disableOp = FundamentalsFileManager.get("config", "disable_in-game_op_command", false);
 		String canOpString = FundamentalsFileManager.get("config", "allow_op_command", "");
@@ -312,7 +312,7 @@ public class Fundamentals extends JavaPlugin implements Listener {
 			e.setCancelled(true);
 			return;
 		}
-		String s = FundamentalsMessages.format(e.getMessage());
+		String s = FundamentalsMessages.format(e.getMessage(), ChatColor.WHITE);
 		e.setMessage(s);
 		String format = "";
 		if(e.getPlayer().isOp()) {
@@ -320,14 +320,15 @@ public class Fundamentals extends JavaPlugin implements Listener {
 		}
 		String name = e.getPlayer().getName().toLowerCase();
 		if(FundamentalsFileManager.properties.get("prefix").containsKey(name))
-			format += FundamentalsMessages.format(FundamentalsFileManager.properties.get("prefix").get(name) + "");
+			format += FundamentalsMessages.format(FundamentalsFileManager.properties.get("prefix").get(name) + "", ChatColor.WHITE);
 		if(FundamentalsFileManager.properties.get("nickname").containsKey(name))
-			format += FundamentalsMessages.format(FundamentalsFileManager.get("config", "nickname_prefix", "")) + ChatColor.RESET + 
-				FundamentalsMessages.format(FundamentalsFileManager.getNoEmpty("nickname", name, e.getPlayer().getName()) + "");
+			format += FundamentalsMessages.format(FundamentalsFileManager.get("config", "nickname_prefix", ""), ChatColor.WHITE)
+			+ ChatColor.RESET + FundamentalsMessages.format(FundamentalsFileManager.getNoEmpty("nickname", name,
+					e.getPlayer().getName()) + "", ChatColor.WHITE);
 		else
 			format += e.getPlayer().getName();
 		if(FundamentalsFileManager.properties.get("suffix").containsKey(name))
-			format += FundamentalsMessages.format("" + FundamentalsFileManager.properties.get("suffix").get(name));
+			format += FundamentalsMessages.format("" + FundamentalsFileManager.properties.get("suffix").get(name), ChatColor.WHITE);
 		format += ChatColor.BLUE + " " + s;
 		e.setFormat(format);
 		//if(e.getPlayer().isOp()) {

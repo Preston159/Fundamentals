@@ -69,9 +69,15 @@ public class FundamentalsMessages {
 						ChatColor.BLUE + to.getName() + ChatColor.GOLD + "] " + ChatColor.RESET + msg);
 		}
 	}
-	public static String format(String s) {
+	public static String format(String s, Character defaultColor) {
+		String d = ChatColor.COLOR_CHAR + defaultColor.toString();
+		String reset = ChatColor.RESET + "";
 		return s.replaceAll("&&", ";amp;").replaceAll("&", ChatColor.COLOR_CHAR + "").replaceAll(";amp;", "&")
-				.replaceAll("\r\n", "\n");
+				.replaceAll(reset.toLowerCase(), d).replaceAll(reset.toUpperCase(), d).replaceAll("\r\n", "\n");
+	}
+	public static String format(String s, ChatColor chatColor) {
+		String c = (chatColor + "").replaceAll(ChatColor.COLOR_CHAR + "", "");
+		return format(s, c.toCharArray()[0]);
 	}
 	@SuppressWarnings("deprecation")
 	public static void sendAll(String msg) {

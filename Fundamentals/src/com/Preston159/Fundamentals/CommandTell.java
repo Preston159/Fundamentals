@@ -19,6 +19,7 @@
 
 package com.Preston159.Fundamentals;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -29,7 +30,7 @@ public class CommandTell {
 			return;
 		}
 		if(from.hasPermission("accentials.chat.color"))
-			msg = FundamentalsMessages.format(msg);
+			msg = FundamentalsMessages.format(msg, ChatColor.WHITE);
 		FundamentalsMessages.sendTell(from, msg, to);
 	}
 	public static void reply(CommandSender from, String msg) {
