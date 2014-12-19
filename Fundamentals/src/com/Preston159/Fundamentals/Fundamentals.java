@@ -108,7 +108,7 @@ public class Fundamentals extends JavaPlugin implements Listener {
 			chatCommands.add(c.toString().toLowerCase());
 		}
 		
-		encoding = FundamentalsFileManager.getNoEmpty("config", "encoding", "UTF8");
+		encoding = FundamentalsFileManager.getNoEmpty("config", "encoding", "UTF-8");
 		motd = FundamentalsMessages.format(FundamentalsFileManager.getPlainFile("motd.txt", false));
 		
 		/**
