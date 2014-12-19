@@ -30,8 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
-import net.minecraft.util.org.apache.commons.io.IOUtils;
-
+import org.apache.commons.io.IOUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.inventory.Inventory;
