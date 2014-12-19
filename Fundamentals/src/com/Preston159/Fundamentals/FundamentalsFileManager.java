@@ -68,6 +68,7 @@ public class FundamentalsFileManager {
 			File file = new File(dataFolder + fileName);
 			if(!file.exists()) {
 				file.createNewFile();
+				Fundamentals.plugin.saveResource(fileName, true);
 			}
 			fis = new FileInputStream(file);
 			StringWriter writer = new StringWriter();

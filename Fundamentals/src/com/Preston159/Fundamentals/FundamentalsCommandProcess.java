@@ -465,15 +465,19 @@ public class FundamentalsCommandProcess {
 			}
 		}
 		if(cmd.getName().equals("motd")) {
+			if(Fundamentals.motd.equals("")) {
+				FundamentalsMessages.sendMessage("No MOTD available", cmd.getSender());
+				return;
+			}
 			if(cmd.getArgs().length >= 1) {
 				Player to = FundamentalsUtil.getPlayer(cmd.getArgs()[0]);
 				if(to == null) {
 					FundamentalsMessages.sendMessage("Player not found", cmd.getSender());
 					return;
 				}
-				FundamentalsMessages.sendMessages(Fundamentals.motd, to);
+				FundamentalsMessages.sendMessagesWithTitle("MOTD", Fundamentals.motd, to);
 			} else if(cmd.isPlayer()) {
-				FundamentalsMessages.sendMessages(Fundamentals.motd, cmd.getPlayer());
+				FundamentalsMessages.sendMessagesWithTitle("MOTD", Fundamentals.motd, cmd.getPlayer());
 			} else {
 				FundamentalsMessages.sendMessage(Fundamentals.usage.get("motd"), cmd.getSender());
 			}

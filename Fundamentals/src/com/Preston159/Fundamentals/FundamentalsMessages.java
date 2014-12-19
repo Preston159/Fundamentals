@@ -54,6 +54,9 @@ public class FundamentalsMessages {
 			p.sendMessage(ChatColor.AQUA + s);
 		p.sendMessage(ChatColor.GOLD + "------------------------------------");
 	}
+	public static void sendMessagesWithTitle(String title, String msgs, Player p) {
+		sendMessagesWithTitle(title, msgs.split("\n"), p);
+	}
 	public static void sendTell(CommandSender from, String msg, Player to) {
 		to.sendMessage(ChatColor.GOLD + "[" + ChatColor.BLUE + from.getName() + ChatColor.GOLD + " -> " +
 				ChatColor.BLUE + "YOU" + ChatColor.GOLD + "] " + ChatColor.RESET + msg);

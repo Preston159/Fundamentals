@@ -256,7 +256,7 @@ public class Fundamentals extends JavaPlugin implements Listener {
 				CommandWarp.run(Bukkit.getServer().getConsoleSender(), p, "spawn");
 		}
 		if(!motd.equals("")) {
-			FundamentalsMessages.sendMessages(motd, p);
+			FundamentalsMessages.sendMessagesWithTitle("MOTD", motd, p);
 		}
 		/**chat*/
 		if(FundamentalsFileManager.properties.get("chatgroups").containsKey(e.getPlayer().getName().toLowerCase())) {
