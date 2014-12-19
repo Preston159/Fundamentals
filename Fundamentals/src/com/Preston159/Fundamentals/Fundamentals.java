@@ -70,6 +70,8 @@ public class Fundamentals extends JavaPlugin implements Listener {
 	HashMap<UUID,ArrayList<Location>> homes = new HashMap<UUID,ArrayList<Location>>();
 	public static HashMap<OfflinePlayer,Location> back = new HashMap<OfflinePlayer,Location>();
 	public static String motd = "";
+	Boolean disableOp = false;
+	ArrayList<UUID> canOp = new ArrayList<UUID>();
 	
 	public static String encoding;
 	
@@ -110,6 +112,16 @@ public class Fundamentals extends JavaPlugin implements Listener {
 		
 		encoding = FundamentalsFileManager.getNoEmpty("config", "encoding", "UTF-8");
 		motd = FundamentalsMessages.format(FundamentalsFileManager.getPlainFile("motd.txt", false));
+		
+		disableOp = FundamentalsFileManager.get("config", "disable_in-game_op_command", false);
+		String canOpString = FundamentalsFileManager.get("config", "allow_op_command", "");
+		for(String s : canOpString.split(";")) {
+			try {
+				canOp.add(UUID.fromString(s));
+			} catch(Exception exc) {
+				Bukkit.getServer().getLogger().severe("Invalid UUID for config\\allow_op_command");
+			}
+		}
 		
 		/**
 		 * Usage stuffs
@@ -173,6 +185,9 @@ public class Fundamentals extends JavaPlugin implements Listener {
 				e.setCancelled(true);
 				return;
 			}
+		}
+		if(label.equalsIgnoreCase("op") && disableOp && !canOp.contains(p.getUniqueId())) {
+			e.setCancelled(true);
 		}
 	/*	if(label.equalsIgnoreCase("tp")) {
 			e.setCancelled(true);
