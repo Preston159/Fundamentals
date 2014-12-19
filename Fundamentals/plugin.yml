@@ -92,3 +92,5 @@ commands:
     description: Open the community chest
   cmdalias:
     description: Set a command alias
+  motd:
+    description: Display the message of the day
