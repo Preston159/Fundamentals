@@ -482,6 +482,10 @@ public class FundamentalsCommandProcess {
 				FundamentalsMessages.sendMessage(Fundamentals.usage.get("motd"), cmd.getSender());
 			}
 		}
+		if(cmd.getName().equals("report")) {
+			FundamentalsMessages.sendMessage("Please create a ticket at http://dev.bukkit.org/"
+					+ "bukkit-plugins/fundamentals/create-ticket/", cmd.getSender());
+		}
 		
 		/**chat*/
 		if(!Fundamentals.chatCommands.contains(cmd.getName())) return;
