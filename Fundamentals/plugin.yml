@@ -94,3 +94,5 @@ commands:
     description: Set a command alias
   motd:
     description: Display the message of the day
+  report:
+    description: Report a bug/problem
