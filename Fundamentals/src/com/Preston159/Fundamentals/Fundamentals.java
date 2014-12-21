@@ -111,11 +111,12 @@ public class Fundamentals extends JavaPlugin implements Listener {
 		}
 		
 		encoding = FundamentalsFileManager.getNoEmpty("config", "encoding", "UTF-8");
-		motd = FundamentalsMessages.format(FundamentalsFileManager.getPlainFile("motd.txt", false), ChatColor.WHITE);
+		motd = FundamentalsFileManager.getPlainFile("motd.txt", false);
 		
 		disableOp = FundamentalsFileManager.get("config", "disable_in-game_op_command", false);
 		String canOpString = FundamentalsFileManager.get("config", "allow_op_command", "");
 		for(String s : canOpString.split(";")) {
+			if(s.equals("")) continue;
 			try {
 				canOp.add(UUID.fromString(s));
 			} catch(Exception exc) {
