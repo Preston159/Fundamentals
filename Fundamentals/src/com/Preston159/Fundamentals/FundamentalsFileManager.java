@@ -67,7 +67,7 @@ public class FundamentalsFileManager {
 		String s = "";
 		try {
 			enc = Files.readAllBytes(Paths.get(dataFolder + fileName));
-			s = new String(enc, Charset.forName(Fundamentals.encoding));
+			s = new String(enc, Charset.forName(Fundamentals.encoding)).replaceAll("\r\n", "\n");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
