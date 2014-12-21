@@ -49,6 +49,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.Inventory;
 
 public class Fundamentals extends JavaPlugin implements Listener {
@@ -292,6 +293,7 @@ public class Fundamentals extends JavaPlugin implements Listener {
 	
 	@EventHandler
 	public void onPlayerTeleport(PlayerTeleportEvent e) {
+		if(!(e.getCause() == TeleportCause.PLUGIN)) return;
 		Player p = e.getPlayer();
 		if(!allowedTeleport.contains(p.getUniqueId())) {
 			e.setCancelled(true);
