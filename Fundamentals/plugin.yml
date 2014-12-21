@@ -2,6 +2,7 @@ name: Fundamentals
 author: Preston159
 version: 1.0.4
 description: A collection of essential commands
+website: http://dev.bukkit.org/bukkit-plugins/fundamentals
 main: com.Preston159.Fundamentals.Fundamentals
 depend: []
 commands:
