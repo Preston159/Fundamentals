@@ -51,7 +51,7 @@ public class FundamentalsMessages {
 		line = line.substring(0, Math.max(0, length));
 		p.sendMessage(ChatColor.GOLD + line + ChatColor.BLUE + title + ChatColor.GOLD + line);
 		for(String s : msgs)
-			p.sendMessage(ChatColor.AQUA + s);
+			p.sendMessage(ChatColor.AQUA + format(s, ChatColor.AQUA));
 		p.sendMessage(ChatColor.GOLD + "------------------------------------");
 	}
 	public static void sendMessagesWithTitle(String title, String msgs, Player p) {
@@ -71,13 +71,13 @@ public class FundamentalsMessages {
 	}
 	public static String format(String s, Character defaultColor) {
 		String d = ChatColor.COLOR_CHAR + defaultColor.toString();
-		String reset = ChatColor.RESET + "";
+		String reset = ChatColor.COLOR_CHAR + "r";
 		return s.replaceAll("&&", ";amp;").replaceAll("&", ChatColor.COLOR_CHAR + "").replaceAll(";amp;", "&")
 				.replaceAll(reset.toLowerCase(), d).replaceAll(reset.toUpperCase(), d).replaceAll("\r\n", "\n");
 	}
 	public static String format(String s, ChatColor chatColor) {
-		String c = (chatColor + "").replaceAll(ChatColor.COLOR_CHAR + "", "");
-		return format(s, c.toCharArray()[0]);
+		String c = chatColor + "";
+		return format(s, c.toCharArray()[1]);
 	}
 	@SuppressWarnings("deprecation")
 	public static void sendAll(String msg) {
