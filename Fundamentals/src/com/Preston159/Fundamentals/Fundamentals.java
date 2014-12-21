@@ -273,8 +273,7 @@ public class Fundamentals extends JavaPlugin implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
 		if(!p.hasPlayedBefore()) {
-			if(CommandWarp.exists("spawn"))
-				CommandWarp.run(Bukkit.getServer().getConsoleSender(), p, "spawn");
+			CommandWarp.run(Bukkit.getServer().getConsoleSender(), p, "spawn");
 		}
 		if(!motd.equals("")) {
 			FundamentalsMessages.sendMessagesWithTitle("MOTD", motd, p);
