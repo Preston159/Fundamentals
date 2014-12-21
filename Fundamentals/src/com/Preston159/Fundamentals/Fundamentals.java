@@ -64,6 +64,8 @@ public class Fundamentals extends JavaPlugin implements Listener {
 	public static HashMap<UUID,HashMap<String,String>> alias = new HashMap<UUID,HashMap<String,String>>();
 	
 	static List<UUID> allowedTeleport = new ArrayList<UUID>();
+	public static HashMap<UUID,String> tpSuccess = new HashMap<UUID,String>();
+	
 	
 	public static HashMap<UUID,HashMap<Material,String>> powertool = new HashMap<UUID,HashMap<Material,String>>();
 	public static HashMap<UUID,Boolean> usept = new HashMap<UUID,Boolean>();
@@ -373,7 +375,12 @@ public class Fundamentals extends JavaPlugin implements Listener {
 				back.put((OfflinePlayer) p, lf);
 				allowedTeleport.add(p.getUniqueId());
 				p.teleport(lt);
-				FundamentalsMessages.sendMessage("Teleportation commencing", p);
+				if(!tpSuccess.containsKey(p.getUniqueId()))
+					FundamentalsMessages.sendMessage("Teleportation commencing", p);
+				else {
+					FundamentalsMessages.sendMessage(tpSuccess.get(p.getUniqueId()), p);
+					tpSuccess.remove(p.getUniqueId());
+				}
 			}
 		}, delay * 20);
 		
@@ -381,7 +388,20 @@ public class Fundamentals extends JavaPlugin implements Listener {
 	public static void allowedTeleport(Player p, Player to, Integer delay) {
 		allowedTeleport(p, to.getLocation(), delay);
 	}
-	
+	public static void teleport(Player p, Location l, String message) {
+		p.teleport(l);
+		if(message != "")
+			tpSuccess.put(p.getUniqueId(), message);
+	}
+	public static void teleport(Player p, Player to, String message) {
+		teleport(p, to.getLocation(), message);
+	}
+	public static void teleport(Player p, Location l) {
+		teleport(p, l, "");
+	}
+	public static void teleport(Player p, Player to) {
+		teleport(p, to.getLocation(), "");
+	}
 }
 
 
