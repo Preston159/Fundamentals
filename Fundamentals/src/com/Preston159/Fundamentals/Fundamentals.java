@@ -296,9 +296,11 @@ public class Fundamentals extends JavaPlugin implements Listener {
 		Player p = e.getPlayer();
 		if(!allowedTeleport.contains(p.getUniqueId())) {
 			e.setCancelled(true);
-			FundamentalsMessages.sendMessage("Teleportation will commence in " + String.valueOf(teleportDelay) +
-					" seconds, don't move", p);
-			allowedTeleport(p, e.getTo(), teleportDelay);
+			Integer tpDelay = (FundamentalsUtil.hasPermission(p, "notpdelay", false, false) ? 0 : teleportDelay);
+			if(tpDelay != 0)
+				FundamentalsMessages.sendMessage("Teleportation will commence in " + String.valueOf(teleportDelay) +
+						" seconds, don't move", p);
+			allowedTeleport(p, e.getTo(), tpDelay);
 		} else allowedTeleport.remove(p.getUniqueId());
 	}
 	
