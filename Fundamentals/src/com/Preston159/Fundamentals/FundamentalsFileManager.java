@@ -23,14 +23,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.StringWriter;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
-
-import net.minecraft.util.org.apache.commons.io.IOUtils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -63,24 +63,16 @@ public class FundamentalsFileManager {
 	}
 	public static String getPlainFile(String fileName, Boolean saveNull) {
 		new File(dataFolder).mkdir();
-		FileInputStream fis = null;
+		byte[] enc;
 		String s = "";
 		try {
-			File file = new File(dataFolder + fileName);
-			if(!file.exists()) {
-				file.createNewFile();
-				Fundamentals.plugin.saveResource(fileName, true);
-			}
-			fis = new FileInputStream(file);
-			StringWriter writer = new StringWriter();
-			IOUtils.copy(fis, writer, Fundamentals.encoding);
-			s = writer.toString();
-			if(saveNull || s != "");
-				files.put(fileName, s);
-			fis.close();
-		} catch(Exception exc) {
-			
+			enc = Files.readAllBytes(Paths.get(dataFolder + fileName));
+			s = new String(enc, Charset.forName(Fundamentals.encoding));
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+		if(saveNull || s != "")
+			files.put(fileName, s);
 		return s;
 	}
 	public static String get(String file, String key, String def) {
