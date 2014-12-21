@@ -312,7 +312,7 @@ public class Fundamentals extends JavaPlugin implements Listener {
 			e.setCancelled(true);
 			return;
 		}
-		String s = FundamentalsMessages.format(e.getMessage(), ChatColor.WHITE);
+		String s = FundamentalsMessages.format(e.getMessage(), ChatColor.BLUE);
 		e.setMessage(s);
 		String format = "";
 		if(e.getPlayer().isOp()) {
