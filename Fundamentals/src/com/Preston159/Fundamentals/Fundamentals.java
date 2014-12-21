@@ -62,6 +62,8 @@ public class Fundamentals extends JavaPlugin implements Listener {
 	
 	public static HashMap<UUID,HashMap<String,String>> alias = new HashMap<UUID,HashMap<String,String>>();
 	
+	static List<UUID> allowedTeleport = new ArrayList<UUID>();
+	
 	public static HashMap<UUID,HashMap<Material,String>> powertool = new HashMap<UUID,HashMap<Material,String>>();
 	public static HashMap<UUID,Boolean> usept = new HashMap<UUID,Boolean>();
 	public static List<UUID> socialspy = new ArrayList<UUID>();
@@ -72,6 +74,7 @@ public class Fundamentals extends JavaPlugin implements Listener {
 	public static String motd = "";
 	Boolean disableOp = false;
 	ArrayList<UUID> canOp = new ArrayList<UUID>();
+	static Integer teleportDelay = 3;
 	
 	public static String encoding;
 	
@@ -123,6 +126,8 @@ public class Fundamentals extends JavaPlugin implements Listener {
 				Bukkit.getServer().getLogger().severe("Invalid UUID for config\\allow_op_command");
 			}
 		}
+		
+		teleportDelay = FundamentalsFileManager.get("config", "teleport_delay", 3);
 		
 		/**
 		 * Usage stuffs
@@ -289,8 +294,12 @@ public class Fundamentals extends JavaPlugin implements Listener {
 	@EventHandler
 	public void onPlayerTeleport(PlayerTeleportEvent e) {
 		Player p = e.getPlayer();
-		Location l = e.getFrom();
-		back.put((OfflinePlayer) p, l);
+		if(!allowedTeleport.contains(p.getUniqueId())) {
+			e.setCancelled(true);
+			FundamentalsMessages.sendMessage("Teleportation will commence in " + String.valueOf(teleportDelay) +
+					" seconds, don't move", p);
+			allowedTeleport(p, e.getTo(), teleportDelay);
+		} else allowedTeleport.remove(p.getUniqueId());
 	}
 	
 	@EventHandler
@@ -350,6 +359,25 @@ public class Fundamentals extends JavaPlugin implements Listener {
 		return true;	*/
 	}
 	
+	public static void allowedTeleport(final Player p, final Location lt, Integer delay) {
+		final Location lf = p.getLocation();
+		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+			public void run() {
+				if(p.getLocation().distance(lf) > 1) {
+					FundamentalsMessages.sendMessage("Teleportation cancelled", p);
+					return;
+				}
+				back.put((OfflinePlayer) p, lf);
+				allowedTeleport.add(p.getUniqueId());
+				p.teleport(lt);
+				FundamentalsMessages.sendMessage("Teleportation commencing", p);
+			}
+		}, delay * 20);
+		
+	}
+	public static void allowedTeleport(Player p, Player to, Integer delay) {
+		allowedTeleport(p, to.getLocation(), delay);
+	}
 	
 }
 

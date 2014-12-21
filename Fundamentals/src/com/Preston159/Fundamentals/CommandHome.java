@@ -35,7 +35,6 @@ public class CommandHome {
 		}
 		Location l = FundamentalsFileManager.getLocation("homes", u);
 		p.teleport(l);
-		FundamentalsMessages.sendMessage("Teleported to home", p);
 	}
 	public static void set(Player p) {
 		String s = p.getWorld().getName() + "," + String.valueOf(p.getLocation().getX()) + "," +
