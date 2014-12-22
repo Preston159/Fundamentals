@@ -24,7 +24,6 @@ import java.util.Properties;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 
 public class CommandWarp {
@@ -43,17 +42,14 @@ public class CommandWarp {
 		if(init instanceof Player)
 			if(init == p)
 				same = true;
-		String out = "Warped " + (same ? "" : p.getName()) + "to " + warp;
-		Horse h = null;
-		if(p.isInsideVehicle()) {
-			if(p.getVehicle() instanceof Horse) {
-				h = (Horse) p.getVehicle();
-				h.eject();
-				h.teleport(l);
-			}
+		String out = "Warped " + (same ? "" : p.getName() + " ") + "to " + warp;
+		if(same) {
+			Fundamentals.tpSuccess.put(p.getUniqueId(), out);
+			p.teleport(l);
+		} else {
+			Fundamentals.allowedTeleport(p, l, 0);
+			FundamentalsMessages.sendMessage(out, init);
 		}
-		p.teleport(l);
-		FundamentalsMessages.sendMessage(out, init);
 	}
 	public static void list(CommandSender sender) {
 		Properties p = FundamentalsFileManager.properties.get("warps");
@@ -90,7 +86,14 @@ public class CommandWarp {
 		if(sender instanceof Player)
 			if((Player) sender == p)
 				same = true;
-		FundamentalsMessages.sendMessage("Teleported " + (same ? "" : p.getName() + " ") + "to spawn", sender);
+		String out = "Teleported " + (same ? "" : p.getName() + " ") + "to spawn";
+		if(same) {
+			Fundamentals.tpSuccess.put(p.getUniqueId(), out);
+			p.teleport(l);
+		} else {
+			Fundamentals.allowedTeleport(p, l, 0);
+			FundamentalsMessages.sendMessage(out, sender);
+		}
 	}
 	public static void del(CommandSender sender, String warp) {
 		warp = warp.toUpperCase();
