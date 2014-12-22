@@ -347,9 +347,10 @@ public class Fundamentals extends JavaPlugin implements Listener {
 		if(FundamentalsFileManager.properties.get("prefix").containsKey(name))
 			format += FundamentalsMessages.format(FundamentalsFileManager.properties.get("prefix").get(name) + "", ChatColor.WHITE);
 		if(FundamentalsFileManager.properties.get("nickname").containsKey(name))
-			format += FundamentalsMessages.format(FundamentalsFileManager.get("config", "nickname_prefix", ""), ChatColor.WHITE)
-			+ ChatColor.RESET + FundamentalsMessages.format(FundamentalsFileManager.getNoEmpty("nickname", name,
-					e.getPlayer().getName()) + "", ChatColor.WHITE);
+			if(!FundamentalsFileManager.getNoEmpty("nickname", name, "").equals(""))
+				format += FundamentalsMessages.format(FundamentalsFileManager.get("config", "nickname_prefix", ""), ChatColor.WHITE)
+				+ ChatColor.RESET + FundamentalsMessages.format(FundamentalsFileManager.getNoEmpty("nickname", name,
+						e.getPlayer().getName()) + "", ChatColor.WHITE);
 		else
 			format += e.getPlayer().getName();
 		if(FundamentalsFileManager.properties.get("suffix").containsKey(name))
