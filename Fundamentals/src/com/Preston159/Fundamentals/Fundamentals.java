@@ -33,6 +33,7 @@ import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -304,7 +305,16 @@ public class Fundamentals extends JavaPlugin implements Listener {
 				FundamentalsMessages.sendMessage("Teleportation will commence in " + String.valueOf(teleportDelay) +
 						" seconds, don't move", p);
 			allowedTeleport(p, e.getTo(), tpDelay);
-		} else allowedTeleport.remove(p.getUniqueId());
+		} else {
+			if(p.isInsideVehicle()) {
+				if(p.getVehicle() instanceof Horse) {
+					Horse h = (Horse) p.getVehicle();
+					h.eject();
+					h.teleport(e.getTo());
+				}
+			}
+			allowedTeleport.remove(p.getUniqueId());
+		}
 	}
 	
 	@EventHandler
